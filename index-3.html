@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171923">
+<title>Business Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF8F0;--card:#FFFFFF;--tx:#171923;--mut:#6b6f80;--ink:#7047EB;--inkt:#FFFFFF;--sec:#EDE7FF;--sect:#7047EB;--hd:#171923;--hdt:#FFFFFF;--acc:#EDE7FF;--bd:#eadfce;--ok:#15803d;--lo:#b45309;--no:#b91c1c;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141c;--card:#1d2030;--tx:#f1f0f8;--mut:#a5a8bd;--sec:#2a2450;--sect:#c9b8ff;--bd:#2c3048;--ok:#4ade80;--lo:#fbbf24;--no:#f87171}}
+:root[data-theme="dark"]{--bg:#12141c;--card:#1d2030;--tx:#f1f0f8;--mut:#a5a8bd;--sec:#2a2450;--sect:#c9b8ff;--bd:#2c3048;--ok:#4ade80;--lo:#fbbf24;--no:#f87171}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font:16px/1.45 Mukta,system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:84px}
+header{background:var(--hd);color:var(--hdt);padding:calc(16px + env(safe-area-inset-top,0px)) 16px 14px}
+header h1{margin:0;font-size:22px;font-weight:800;color:var(--hdt)}
+header p{margin:0;color:inherit;opacity:.8;font-size:14px}
+#app{padding:8px 16px;max-width:560px;margin:0 auto}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:10px 0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.m{color:var(--mut);font-size:14px}
+h2{margin:4px 0 8px;font-size:20px}
+h3{margin:14px 0 4px;font-size:16px}
+label{display:block;margin:10px 0 4px;font-size:14px;color:var(--mut)}
+input,select{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:var(--bg);color:var(--tx)}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--ink);outline-offset:1px}
+.b{width:100%;margin-top:14px;padding:13px;border:0;border-radius:12px;background:var(--ink);color:var(--inkt);font:inherit;font-weight:600;cursor:pointer}
+.b.s{background:var(--sec);color:var(--sect);border:0}
+.b.d{background:transparent;color:var(--no);border:1px solid var(--no)}
+.hero{background:var(--ink);color:var(--inkt);border-radius:18px;padding:18px;margin:10px 0}
+.hero .m{color:#e3d9ff}
+.hero .big{font-size:40px;font-weight:800;line-height:1.1;margin:2px 0 0;border-bottom:4px solid var(--acc);display:inline-block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid .c{margin:0}
+.n{font-size:22px;font-weight:800}
+.tag{font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.ok{color:var(--ok)}.lo{color:var(--lo)}.no{color:var(--no)}
+.pl{color:var(--ok)}.mi{color:var(--no)}
+.seg{display:flex;gap:6px;margin:8px 0}
+.seg button{flex:1;padding:9px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--inkt);border-color:var(--ink)}
+#nav{position:fixed;left:0;right:0;bottom:0;display:none;background:var(--card);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+#nav button{flex:1;border:0;background:none;color:var(--mut);font:inherit;font-size:13px;padding:6px 0;cursor:pointer}
+#nav button span{display:block;font-size:20px}
+#nav button.on{color:var(--ink);font-weight:800}
+.empty{text-align:center;color:var(--mut);padding:24px 8px}
+.bub{padding:10px 12px;border-radius:12px;margin:6px 0;white-space:pre-wrap}
+.bu{background:var(--ink);color:var(--inkt);margin-left:24px}
+.ba{background:var(--bg);border:1px solid var(--bd);margin-right:24px}
+html:lang(ur) body{font-family:"Noto Naskh Arabic",Mukta,system-ui,sans-serif}
+</style>
+</head>
+<body>
+<header><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><img id="logo" alt="" style="display:none;width:42px;height:42px;border-radius:10px;object-fit:cover"><div style="flex:1"><h1 id="ttl">Business Buddy</h1><p id="sub"></p></div><button id="gear" onclick="T('set')" aria-label="Settings" style="background:none;border:0;padding:6px;cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><select id="lg" onchange="setL(this.value)" aria-label="Language" style="width:auto;background:#2b2e3d;color:#fff;border:0;padding:8px"><option value="hl">Hinglish</option><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select></div></header>
+<div id="app"></div>
+<nav id="nav">
+<button data-t="home" onclick="T('home')"><span>🏠</span>Home</button>
+<button data-t="prod" onclick="T('prod')"><span>📦</span>Saman</button>
+<button data-t="sale" onclick="T('sale')"><span>🛒</span>Bikri</button>
+<button data-t="his" onclick="T('his')"><span>📒</span>Hisaab</button>
+<button data-t="ai" onclick="T('ai')"><span>✨</span>AI</button>
+<button data-t="cust" onclick="T('cust')"><span>👥</span>Grahak</button>
+</nav>
+<script>
+const $=s=>document.querySelector(s);
+let S=null;
+try{S=JSON.parse(localStorage.getItem('bb')||'null')}catch(e){}
+S=S||{shop:'',biz:'',p:[],s:[],e:[]};S.u=S.u||[];S.cfg=S.cfg||{};S.cfg.tabs=S.cfg.tabs||{};
+const save=()=>{try{localStorage.setItem('bb',JSON.stringify(S))}catch(e){}};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const inr=n=>'₹'+(Math.round(n*100)/100).toLocaleString('en-IN');
+const dy=t=>new Date(t).toDateString();
+const mo=t=>{const a=new Date(t),b=new Date();return a.getMonth()===b.getMonth()&&a.getFullYear()===b.getFullYear()};
+const sum=(a,f)=>a.reduce((x,y)=>x+f(y),0);
+const track=()=>S.biz!=='Services';
+let tab='home',edit=null,cedit=null,per='d';
+
+function st(p){if(!track())return null;return p.q<=0?['Khatam','no']:p.q<=p.m?['Kam stock','lo']:['Available','ok']}
+function T(t){tab=t;edit=null;cedit=null;R()}
+
+function R(){
+  const a=$('#app');
+  if(!S.biz){$('#nav').style.display='none';a.innerHTML=setup();return}
+  $('#nav').style.display='flex';
+  $('#ttl').textContent=S.shop||'Business Buddy';
+  $('#sub').textContent=tr(S.biz)+' · '+new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  if(tab!=='home'&&tab!=='set'&&S.cfg.tabs[tab]===false)tab='home';a.innerHTML=cedit?cform():edit?form():({home,prod,sale,his,ai,cust,set:setV})[tab]();
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
+}
+
+function setup(){return `<div class="c"><h2>Swagat hai 👋</h2><p class="m">Apni dukaan ki jaankari bharo. Yeh sirf ek baar poochha jayega.</p>
+<label>Dukaan ka naam</label><input id="sn" placeholder="jaise: Anas Store">
+<label>Business type</label><select id="bt"><option value="Retail dukaan">Retail dukaan</option><option value="Restaurant">Restaurant</option><option value="Wholesale">Wholesale</option><option value="Services">Services</option><option value="Online seller">Online seller</option><option value="Other">Other</option></select>
+<button class="b" onclick="go()">Shuru karo</button></div>`}
+function go(){S.shop=$('#sn').value.trim();S.biz=$('#bt').value;save();R()}
+
+function home(){
+  const td=Date.now(),ts=S.s.filter(x=>dy(x.t)===dy(td)),te=S.e.filter(x=>dy(x.t)===dy(td));
+  const inc=sum(ts,x=>x.q*x.pr),cost=sum(ts,x=>x.q*x.c),ex=sum(te,x=>x.a),pf=inc-cost-ex;
+  const low=track()?S.p.filter(p=>st(p)[1]!=='ok'):[];
+  return `<div class="hero"><div class="m">Aaj ka munafa</div><div class="big">${inr(pf)}</div></div>
+<div class="grid"><div class="c"><div class="m">Aaj ki bikri</div><div class="n">${inr(inc)}</div></div><div class="c"><div class="m">Aaj ka kharcha</div><div class="n">${inr(ex)}</div></div></div>
+${track()?`<h3>Stock par nazar</h3>${'Notification'in window&&Notification.permission!=='granted'?`<button class="b s" onclick="enableStockNotifications()">Stock notifications enable karo</button>`:''}${low.length?low.map(p=>`<div class="c row" onclick="ed('${p.id}')"><div><b>${esc(p.n)}</b><div class="m">Bacha: ${p.q}${p.sp?' · '+esc(p.sp):''}</div></div><span class="tag ${st(p)[1]}">${st(p)[0]}</span></div>`).join(''):`<div class="empty">${S.p.length?'Sab saman available hai ✅':'Pehle Saman tab mein products jodo.'}</div>`}`:''}
+${S.p.length?'':`<button class="b" onclick="ed('new')">Pehla product jodo</button>`}`}
+
+function prod(){
+  return `<button class="b" style="margin-top:6px" onclick="ed('new')">+ Naya ${track()?'product':'service'} jodo</button>`+
+  (S.p.length?S.p.map(p=>{const s=st(p);return `<div class="c row" onclick="ed('${p.id}')"><div><b>${esc(p.n)}</b><div class="m">${inr(p.pr)}${track()?' · Stock '+p.q:''}${p.sp?' · '+esc(p.sp):''}</div></div>${s?`<span class="tag ${s[1]}">${s[0]}</span>`:''}</div>`}).join(''):`<div class="empty">Abhi koi ${track()?'product':'service'} nahi hai. Upar wala button dabao.</div>`);
+}
+
+function ed(id){edit=id;R()}
+function form(){
+  const n=edit==='new',p=n?{n:'',pr:'',c:'',q:'',m:5,sp:''}:S.p.find(x=>x.id===edit);
+  return `<div class="c"><h2>${n?'Naya jodo':'Badlav karo'}</h2>
+<label>Naam</label><input id="fn" value="${esc(p.n)}">
+<label>Bechne ka daam (₹)</label><input id="fp" type="number" inputmode="decimal" value="${p.pr}">
+<label>Kharid daam (₹)</label><input id="fc" type="number" inputmode="decimal" value="${p.c}">
+${track()?`<label>Stock (kitna hai)</label><input id="fq" type="number" inputmode="numeric" value="${p.q}">
+<label>Kam stock alert (is se kam ho to batao)</label><input id="fm" type="number" inputmode="numeric" value="${p.m}">`:''}
+<label>Kahan se aata hai (supplier)</label><input id="fs" value="${esc(p.sp)}" placeholder="jaise: Sharma Traders, Katni">
+<button class="b" onclick="saveP()">Save karo</button>
+<button class="b s" onclick="T('prod')">Wapas</button>
+${n?'':`<button class="b d" onclick="delP()">Hata do</button>`}</div>`}
+function saveP(){
+  const n=$('#fn').value.trim();if(!n){alert('Naam likho');return}
+  const o={n,pr:+$('#fp').value||0,c:+$('#fc').value||0,q:track()?(+$('#fq').value||0):0,m:track()?(+$('#fm').value||0):0,sp:$('#fs').value.trim()};
+  if(edit==='new')S.p.push({id:uid(),...o});else Object.assign(S.p.find(x=>x.id===edit),o);
+  save();T('prod')}
+function delP(){if(confirm('Yeh hata dein?')){S.p=S.p.filter(x=>x.id!==edit);save();T('prod')}}
+
+function sale(){
+  if(!S.p.length)return `<div class="empty">Bikri likhne se pehle Saman tab mein kuch jodo.</div>`;
+  const ts=S.s.filter(x=>dy(x.t)===dy(Date.now())).slice().reverse();
+  return `<div class="c"><h2>Bikri likho</h2>
+<label>Kya becha</label><select id="sp" onchange="pick()">${S.p.map(p=>`<option value="${p.id}">${esc(p.n)}${track()?' (stock '+p.q+')':''}</option>`).join('')}</select>
+<label>Kitna (quantity)</label><input id="sq" type="number" inputmode="numeric" value="1" min="1">
+<label>Daam per piece (₹)</label><input id="sr" type="number" inputmode="decimal" value="${S.p[0].pr}">
+<label>Abhi kitna payment mila? (₹) — baaki udhar rahega</label><input id="spaid" type="number" inputmode="decimal" value="0" min="0">
+<label>Grahak (optional)</label><select id="sc"><option value="">Walk-in grahak</option>${S.u.map(u=>`<option value="${u.id}">${esc(u.n)}</option>`).join('')}</select>
+<button class="b" onclick="sell()">Bikri save karo</button></div>
+<h3>Aaj ki bikri</h3>${ts.length?ts.map(x=>`<div class="c row" style="cursor:default"><div><b>${esc(x.n)}</b><div class="m">${x.q} × ${inr(x.pr)}</div></div><b>${inr(x.q*x.pr)}</b></div>`).join(''):`<div class="empty">Aaj abhi tak koi bikri nahi.</div>`}`}
+function pick(){const p=S.p.find(x=>x.id===$('#sp').value);if(p)$('#sr').value=p.pr}
+function sell(){
+  const p=S.p.find(x=>x.id===$('#sp').value),q=+$('#sq').value,pr=+$('#sr').value;
+  if(!p||q<=0){alert('Quantity sahi likho');return}
+  if(track()&&q>p.q){alert('Itna stock nahi hai. Abhi '+p.q+' bacha hai.');return}
+  if(track())p.q-=q;
+  const total=q*pr,paid=Math.max(0,Math.min(total,+($('#spaid')?.value||0)));S.s.push({id:uid(),pid:p.id,n:p.n,q,pr,c:p.c,cid:$('#sc').value||null,paid,due:total-paid,payments:paid?[{amount:paid,t:Date.now()}]:[],t:Date.now()});save();R()}
+
+function his(){
+  const f=t=>per==='a'||(per==='m'?mo(t):dy(t)===dy(Date.now()));
+  const ss=S.s.filter(x=>f(x.t)),ee=S.e.filter(x=>f(x.t));
+  const inc=sum(ss,x=>x.q*x.pr),cost=sum(ss,x=>x.q*x.c),ex=sum(ee,x=>x.a),pf=inc-cost-ex;
+  const L=[...ss.map(x=>({t:x.t,k:'s',x})),...ee.map(x=>({t:x.t,k:'e',x}))].sort((a,b)=>b.t-a.t).slice(0,40);
+  const sg=(k,l)=>`<button class="${per===k?'on':''}" onclick="per='${k}';R()">${l}</button>`;
+  return `<div class="seg">${sg('d','Aaj')}${sg('m','Is mahine')}${sg('a','Sab')}</div>
+<div class="hero"><div class="m">Munafa</div><div class="big">${inr(pf)}</div></div>
+<div class="grid"><div class="c"><div class="m">Bikri</div><div class="n">${inr(inc)}</div></div><div class="c"><div class="m">Maal ki laagat</div><div class="n">${inr(cost)}</div></div><div class="c"><div class="m">Kharcha</div><div class="n">${inr(ex)}</div></div><div class="c"><div class="m">Bikri ki entries</div><div class="n">${ss.length}</div></div></div>
+<div class="c"><h2>Kharcha likho</h2><label>Kis cheez ka (kiraya, bijli, salary...)</label><input id="en"><label>Kitna (₹)</label><input id="ea" type="number" inputmode="decimal"><button class="b" onclick="addE()">Kharcha save karo</button></div>
+<h3>Khata</h3>${L.length?L.map(r=>r.k==='s'?`<div class="c row" style="cursor:default"><div><b>${esc(r.x.n)}</b><div class="m">${r.x.q} × ${inr(r.x.pr)} · ${new Date(r.t).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div></div><b class="pl">+${inr(r.x.q*r.x.pr)}</b></div>`:`<div class="c row" style="cursor:default"><div><b>${esc(r.x.n)}</b><div class="m">Kharcha · ${new Date(r.t).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div></div><b class="mi">−${inr(r.x.a)}</b></div>`).join(''):`<div class="empty">Is samay ki koi entry nahi.</div>`}`}
+function addE(){const n=$('#en').value.trim(),a=+$('#ea').value;if(!n||a<=0){alert('Naam aur amount likho');return}S.e.push({id:uid(),n,a,t:Date.now()});save();R()}
+
+let chat=[],pend=null,busy=false,aqv='',SM=null,vm=false,vo=false,att=[],att2=[],cqv='',IMG=true;
+async function api(payload){const r=await fetch('/.netlify/functions/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const j=await r.json();if(!r.ok)throw new Error(j.error||'AI request failed');return j}
+SM=async (history,opts={})=>{const last=history[history.length-1]||{};return {text:(await api({action:'chat',messages:history,context:ctx(),language:S.lang||'hl'})).text}}
+SM.json=async prompt=>api({action:'parse',prompt,context:ctx(),language:S.lang||'hl'}).data;
+
+function ctx(){const td=S.s.filter(x=>dy(x.t)===dy(Date.now())),ms=S.s.filter(x=>mo(x.t)),me=S.e.filter(x=>mo(x.t));
+return `Business type: ${S.biz}\nDukaan: ${S.shop||'-'}\nProducts: ${S.p.map(p=>`${p.n} (bech ${p.pr}, kharid ${p.c}, stock ${p.q}${p.sp?', supplier '+p.sp:''})`).join('; ')||'koi nahi'}\nAaj ki bikri: ${sum(td,x=>x.q*x.pr)}\nIs mahine: bikri ${sum(ms,x=>x.q*x.pr)}, maal laagat ${sum(ms,x=>x.q*x.c)}, kharcha ${sum(me,x=>x.a)}\nTotal customer udhar: ${sum(S.s,x=>x.due??Math.max(0,x.q*x.pr-(x.paid||0)))}`}
+function ai(){
+ if(!SM)return `<div class="empty">AI abhi load ho raha hai ya is jagah available nahi hai.<br>Link ko claude.ai ya Claude app mein kholo aur AI ko ijazat do.</div>`;
+ return `<div class="c"><h2>Bolkar entry likho</h2><p class="m">Jaise: 5 shirt 500 mein becha, 2000 kiraya diya</p>
+<input id="aq" value="${esc(aqv)}" placeholder="Yahan likho ya mic dabao">
+<div class="grid" style="margin-top:10px"><button class="b s" style="margin:0" onclick="mic('aq')">🎤 Bolo</button><button class="b" style="margin:0" onclick="parseE()">Samjho</button></div><button class="b s" onclick="$('#cam2').click()">📷 Bill ya register ki photo</button><input id="cam2" type="file" accept="image/*,.txt,.csv" hidden onchange="addF(this,2)">${att2.length?`<p class="m">Judi hui: ${att2.map(a=>esc(a.name)).join(', ')}</p>`:''}${prev()}</div>
+<div class="c"><h2>AI Product Photo</h2><p class="m">Product ka naam aur style likho. AI promotional product image banane ki koshish karega.</p><input id="imgprompt" placeholder="Jaise: premium black water bottle, studio product photo"><button class="b" onclick="genProductImage()">Product photo banao</button><div id="imgresult"></div></div><div class="c"><h2>Business salah</h2>${chat.length?chat.map(m=>`<div class="bub ${m.role==='user'?'bu':'ba'}">${esc(m.content)}</div>`).join(''):`<p class="m">Apna sawal poochho, ya neeche se chuno.</p>`}${busy?'<p class="m">Soch raha hoon...</p>':''}
+<div class="seg"><button onclick="sug('Kaun sa saman jaldi mangwana chahiye?')">Kya mangwau?</button><button onclick="sug('Mera munafa kaise badhe?')">Munafa badhao</button></div>
+<input id="cq" value="${esc(cqv)}" oninput="cqv=this.value" placeholder="Apna sawal likho">
+<div class="grid" style="margin-top:10px"><button class="b s" style="margin:0" onclick="$('#cam').click()">📷 Camera</button><button class="b s" style="margin:0" onclick="$('#fil').click()">📎 Photo ya file</button></div>
+<input id="cam" type="file" accept="image/*" capture="environment" hidden onchange="addF(this,1)"><input id="fil" type="file" accept="image/*,.txt,.csv,.json,.md" multiple hidden onchange="addF(this,1)">
+${att.length?`<p class="m">Judi hui: ${att.map(a=>esc(a.name)).join(', ')} <button class="tag" style="background:none;color:var(--no)" onclick="att=[];R()">hatao</button></p>`:''}
+<div class="grid" style="margin-top:10px"><button class="b s" style="margin:0" onclick="vtog()">${vm?'⏹ Baatcheet band':'🎤 Baatcheet shuru'}</button><button class="b" style="margin:0" onclick="ask()">Poochho</button></div>
+<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" style="width:auto" ${vo?'checked':''} onchange="vo=this.checked"> Jawab awaaz mein sunao</label></div>`}
+async function genProductImage(){const p=$('#imgprompt').value.trim();if(!p)return alert('Product aur style likho');const box=$('#imgresult');box.textContent='Image ban rahi hai...';try{const r=await api({action:'image',prompt:p,context:ctx()});box.innerHTML='<img alt="Generated product" style="width:100%;border-radius:12px" src="data:'+r.mimeType+';base64,'+r.image+'"><a class="b s" download="business-buddy-product.png" href="data:'+r.mimeType+';base64,'+r.image+'">Image save karo</a>'}catch(e){box.textContent=e.message||'Image generation abhi available nahi hai.'}}
+function mic(id){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Is browser mein awaaz nahi chalti. Type karo.');return}const r=new SR();r.lang=SL();r.onresult=e=>{$('#'+id).value=e.results[0][0].transcript};r.start()}
+function prev(){
+ if(!pend)return '';
+ if(pend.err)return `<p class="no">Samajh nahi aaya. Dobara likho, jaise: 5 shirt 500 mein becha.</p>`;
+ const ss=pend.sales||[],ee=pend.expenses||[];
+ if(!ss.length&&!ee.length)return `<p class="m">Koi bikri ya kharcha nahi mila. Dobara likho.</p>`;
+ return `<h3>Yeh save karun?</h3>`+ss.map(x=>{const p=S.p.find(y=>y.id===x.pid);return `<div class="c"><b>Bikri: ${esc(p?p.n:x.name)}</b><div class="m">${x.qty} × ${inr(x.price??(p?p.pr:0))}${p?'':' · list mein nahi hai'}</div></div>`}).join('')+ee.map(x=>`<div class="c"><b>Kharcha: ${esc(x.name)}</b><div class="m">${inr(x.amount)}</div></div>`).join('')+`<button class="b" onclick="applyE()">Haan, save karo</button><button class="b s" onclick="pend=null;R()">Cancel</button>`}
+async function parseE(){
+ const t=$('#aq').value.trim();if(!t||!SM||busy)return;
+ aqv=t;busy=true;pend=null;R();
+ try{
+  const prods=S.p.map(p=>({id:p.id,name:p.n,price:p.pr,stock:p.q}));
+  const imgs=att2.filter(a=>a.img).map(a=>a.blob),ft=att2.filter(a=>a.text).map(a=>a.text).join(' ');att2=[];
+  pend=await SM.json(`Tum ek dukaan ke hisaab ke madadgaar ho. User ka message Hindi, Urdu, English ya Hinglish mein ho sakta hai. Usse bikri aur kharche ki entries nikalo.\nProducts: ${JSON.stringify(prods)}\nMessage: ${t}\nSirf JSON do, is shape mein: {"sales":[{"pid":"product id ya null","name":"naam","qty":number,"price":number ya null}],"expenses":[{"name":"kis cheez ka","amount":number}]}\nNiyam: pid sirf upar ki list se ho, warna null. Price na likha ho to null. Kuch na mile to khali lists. Photo ya file ho to usme se bhi entries nikalo. File ka text: ${ft}`,imgs.length&&IMG?{images:imgs}:{});
+ }catch(e){pend={err:1}}
+ busy=false;R()}
+function applyE(){
+ (pend.sales||[]).forEach(x=>{const p=S.p.find(y=>y.id===x.pid),q=+x.qty||0;if(q<=0)return;
+  if(p&&track())p.q=Math.max(0,p.q-q);
+  S.s.push({id:uid(),pid:p?p.id:null,n:p?p.n:String(x.name||'Saman'),q,pr:+(x.price??(p?p.pr:0))||0,c:p?p.c:0,t:Date.now()})});
+ (pend.expenses||[]).forEach(x=>{const a=+x.amount||0;if(a>0)S.e.push({id:uid(),n:String(x.name||'Kharcha'),a,t:Date.now()})});
+ pend=null;aqv='';save();T('his')}
+function sug(t){$('#cq').value=t;ask()}
+async function addF(el,w){
+ const c=$('#cq'),a=$('#aq');if(c)cqv=c.value;if(a)aqv=a.value;
+ const L=[...el.files];el.value='';const T2=w==2?att2:att;
+ for(const f of L){
+  if(f.size>8e6){alert(f.name+' bahut badi hai. 8 MB se chhoti rakho.');continue}
+  if(f.type.startsWith('image/'))T2.push({name:f.name,blob:f,img:1});
+  else if(/\.(txt|csv|json|md)$/i.test(f.name)){try{T2.push({name:f.name,text:(await f.text()).slice(0,12000)})}catch(e){}}
+  else alert('Abhi sirf photo, txt, csv, json file chalti hai.');
+ }
+ R()}
+function voice(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){alert('Is browser mein awaaz nahi chalti. Chrome try karo ya type karo.');vm=false;R();return}
+ const r=new SR();r.lang=SL();
+ r.onresult=e=>{const c=$('#cq');if(c){c.value=e.results[0][0].transcript;ask()}};
+ r.onerror=()=>{vm=false;R()};
+ r.start()}
+function vtog(){vm=!vm;if(vm)vo=true;R();if(vm)voice();else{try{speechSynthesis.cancel()}catch(e){}}}
+function say(t){
+ try{if(!window.speechSynthesis)return;speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(String(t).slice(0,600));u.lang=SL();
+  u.onend=()=>{if(vm)voice()};speechSynthesis.speak(u)}catch(e){}}
+async function ask(){
+ const A=att,q=$('#cq').value.trim()||(A.length?'Is photo ya file ke baare mein batao.':'');if(!q||!SM||busy)return;att=[];cqv='';
+ chat.push({role:'user',content:q+(A.length?' 📎 '+A.map(a=>a.name).join(', '):'')});busy=true;R();
+ try{
+  const sys=`Tum Business Buddy ho. SIRF business, dukaan, sales, inventory, customers, payments, udhar, pricing, suppliers, expenses, profit, marketing aur business operations par madad karo. In topics par user ke natural language, spelling mistakes, short forms aur follow-up context ko samjho; fixed commands tak limited mat raho. Non-business chit-chat ya personal-life sawalon par vinamrata se kaho ki tum business assistant ho. Jawab user ki message wali bhasha mein do (Hinglish, Hindi, Urdu ya English), chhote practical steps ke saath. Hisaab sirf neeche diye actual numbers se karo.\n\nDukaan ki jaankari:\n${ctx()}`;
+  const h=chat.slice(-7).map(m=>({...m}));const ft=A.filter(a=>a.text).map(a=>'File '+a.name+': '+a.text).join(' ');if(ft)h[h.length-1].content+=' '+ft;h[0].content=sys+'\n\nSawal: '+h[0].content;
+  const imgs=A.filter(a=>a.img).map(a=>a.blob);if(imgs.length&&!IMG)alert('Is jagah photo nahi padhi ja sakti. Sirf text jayega.');const r=await SM(h,imgs.length&&IMG?{cache:false,images:imgs}:{cache:false});chat.push({role:'assistant',content:r.text});if(vo)say(r.text);
+ }catch(e){vm=false;chat.push({role:'assistant',content:'Abhi jawab nahi mil paya. Thodi der baad dobara try karo.'})}
+ busy=false;R()}
+
+function cust(){return `<button class="b" style="margin-top:6px" onclick="cd('new')">+ Naya grahak jodo</button>`+(S.u.length?S.u.map(u=>`<div class="c row" onclick="cd('${u.id}')"><div><b>${esc(u.n)}</b><div class="m">${esc(u.ph||'-')}${u.ad?' · '+esc(u.ad):''}</div></div><b>${inr(sum(S.s.filter(x=>x.cid===u.id),x=>x.due??Math.max(0,x.q*x.pr-(x.paid||0))))} due</b></div>`).join(''):`<div class="empty">Abhi koi grahak nahi hai. Upar wala button dabao.</div>`)}
+function cd(id){cedit=id;R()}
+function cform(){
+ const n=cedit==='new',u=n?{n:'',ph:'',ad:'',nt:''}:S.u.find(x=>x.id===cedit),all=n?[]:S.s.filter(x=>x.cid===u.id).slice().reverse(),due=n?0:sum(all,x=>x.due??Math.max(0,x.q*x.pr-(x.paid||0)));
+ return `<div class="c"><h2>${n?'Naya grahak':'Grahak ki jaankari'}</h2><label>Naam</label><input id="un" value="${esc(u.n)}"><label>Mobile number</label><input id="up" type="tel" inputmode="tel" value="${esc(u.ph)}"><label>Pata (address)</label><input id="ua" value="${esc(u.ad)}"><label>Note</label><input id="ut" value="${esc(u.nt)}"><button class="b" onclick="saveC()">Save karo</button><button class="b s" onclick="T('cust')">Wapas</button>${n?'':`<button class="b d" onclick="delC()">Hata do</button>`}</div>`+(n?'':`<div class="grid"><div class="c"><div class="m">Kul kharid</div><div class="n">${inr(sum(all,x=>x.q*x.pr))}</div></div><div class="c"><div class="m">Bikri ki entries</div><div class="n">${all.length}</div></div></div><div class="c"><h3 style="margin-top:0">Udhar / Payment</h3><div class="m">Baaki udhar</div><div class="n">${inr(due)}</div><label>Payment receive karo (₹)</label><input id="payamt" type="number" inputmode="decimal" min="1" placeholder="Amount"><button class="b" onclick="receivePay()">Payment save karo</button></div><h3>Kharid ka itihaas</h3>`+all.slice(0,20).map(x=>`<div class="c row" style="cursor:default"><div><b>${esc(x.n)}</b><div class="m">${x.q} × ${inr(x.pr)} · Paid ${inr(x.paid||0)} · Due ${inr(x.due??Math.max(0,x.q*x.pr-(x.paid||0)))} · ${new Date(x.t).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</div></div><b>${inr(x.q*x.pr)}</b></div>`).join(''))}
+function saveC(){
+ const n=$('#un').value.trim(),ph=$('#up').value.trim();
+ if(!n){alert('Naam likho');return}
+ if(ph&&!/^[0-9+ ]{10,14}$/.test(ph)){alert('Mobile number sahi likho');return}
+ const o={n,ph,ad:$('#ua').value.trim(),nt:$('#ut').value.trim()};
+ if(cedit==='new')S.u.push({id:uid(),...o});else Object.assign(S.u.find(x=>x.id===cedit),o);
+ save();T('cust')}
+function receivePay(){const a=+$('#payamt').value;if(a<=0){alert('Amount sahi likho');return}let left=a;const rows=S.s.filter(x=>x.cid===cedit&&((x.due??Math.max(0,x.q*x.pr-(x.paid||0)))>0)).sort((a,b)=>a.t-b.t);for(const x of rows){if(left<=0)break;const d=x.due??Math.max(0,x.q*x.pr-(x.paid||0)),v=Math.min(d,left);x.paid=(x.paid||0)+v;x.due=d-v;x.payments=x.payments||[];x.payments.push({amount:v,t:Date.now()});left-=v}if(left>0)alert('Extra amount '+inr(left)+' record nahi hua; sirf udhar adjust hua.');save();R()}
+function delC(){if(confirm('Yeh hata dein?')){S.u=S.u.filter(x=>x.id!==cedit);save();T('cust')}}
+
+const LN={hl:'Hinglish (Roman Hindi)',en:'English',hi:'Hindi (Devanagari)',ur:'Urdu (Arabic script)'},SPL={hl:'hi-IN',en:'en-IN',hi:'hi-IN',ur:'ur-PK'},LI={en:0,hi:1,ur:2};
+const LNAME=()=>LN[S.lang||'hl'],SL=()=>SPL[S.lang||'hl'];
+const D=Object.fromEntries([
+['Home','Home','होम','ہوم'],['Saman','Items','सामान','سامان'],['Bikri','Sales','बिक्री','فروخت'],['Hisaab','Accounts','हिसाब','حساب'],['AI','AI','एआई','اے آئی'],['Grahak','Customers','ग्राहक','گاہک'],
+['Swagat hai 👋','Welcome 👋','स्वागत है 👋','خوش آمدید 👋'],
+['Apni dukaan ki jaankari bharo. Yeh sirf ek baar poochha jayega.','Enter your shop details. This is asked only once.','अपनी दुकान की जानकारी भरें। यह सिर्फ़ एक बार पूछा जाएगा।','اپنی دکان کی معلومات بھریں۔ یہ صرف ایک بار پوچھا جائے گا۔'],
+['Dukaan ka naam','Shop name','दुकान का नाम','دکان کا نام'],['Business type','Business type','व्यापार का प्रकार','کاروبار کی قسم'],
+['Retail dukaan','Retail shop','खुदरा दुकान','خوردہ دکان'],['Restaurant','Restaurant','रेस्टोरेंट','ریسٹورنٹ'],['Wholesale','Wholesale','थोक','تھوک'],['Services','Services','सेवाएं','سروسز'],['Online seller','Online seller','ऑनलाइन विक्रेता','آن لائن سیلر'],['Other','Other','अन्य','دیگر'],['Shuru karo','Get started','शुरू करें','شروع کریں'],
+['Aaj ka munafa','Today profit','आज का मुनाफ़ा','آج کا منافع'],['Aaj ki bikri','Today sales','आज की बिक्री','آج کی فروخت'],['Aaj ka kharcha','Today expenses','आज का ख़र्चा','آج کا خرچہ'],['Stock par nazar','Stock watch','स्टॉक पर नज़र','اسٹاک پر نظر'],
+['Sab saman available hai ✅','All items are available ✅','सारा सामान उपलब्ध है ✅','سارا سامان دستیاب ہے ✅'],
+['Pehle Saman tab mein products jodo.','First add products in the Items tab.','पहले सामान टैब में प्रोडक्ट जोड़ें।','پہلے سامان ٹیب میں پروڈکٹ شامل کریں۔'],
+['Pehla product jodo','Add first product','पहला प्रोडक्ट जोड़ें','پہلا پروڈکٹ شامل کریں'],['Khatam','Out of stock','ख़त्म','ختم'],['Kam stock','Low stock','कम स्टॉक','کم اسٹاک'],['Available','Available','उपलब्ध','دستیاب'],
+['+ Naya product jodo','+ Add product','+ नया प्रोडक्ट जोड़ें','+ نیا پروڈکٹ شامل کریں'],
+['Abhi koi product nahi hai. Upar wala button dabao.','No products yet. Tap the button above.','अभी कोई प्रोडक्ट नहीं है। ऊपर का बटन दबाएं।','ابھی کوئی پروڈکٹ نہیں ہے۔ اوپر والا بٹن دبائیں۔'],
+['Naya jodo','Add new','नया जोड़ें','نیا شامل کریں'],['Badlav karo','Edit','बदलाव करें','تبدیلی کریں'],['Naam','Name','नाम','نام'],
+['Bechne ka daam (₹)','Selling price (₹)','बेचने का दाम (₹)','فروخت کی قیمت (₹)'],['Kharid daam (₹)','Cost price (₹)','ख़रीद दाम (₹)','خرید قیمت (₹)'],['Stock (kitna hai)','Stock (quantity)','स्टॉक (कितना है)','اسٹاک (کتنا ہے)'],
+['Kam stock alert (is se kam ho to batao)','Low stock alert (warn below this)','कम स्टॉक अलर्ट (इससे कम हो तो बताएं)','کم اسٹاک الرٹ (اس سے کم ہو تو بتائیں)'],
+['Kahan se aata hai (supplier)','Where it comes from (supplier)','कहाँ से आता है (सप्लायर)','کہاں سے آتا ہے (سپلائر)'],
+['Save karo','Save','सेव करें','محفوظ کریں'],['Wapas','Back','वापस','واپس'],['Hata do','Delete','हटा दें','ہٹا دیں'],
+['Bikri likho','Record a sale','बिक्री लिखें','فروخت لکھیں'],['Kya becha','What was sold','क्या बेचा','کیا بیچا'],['Kitna (quantity)','Quantity','कितना (मात्रा)','کتنا (مقدار)'],['Daam per piece (₹)','Price per piece (₹)','दाम प्रति पीस (₹)','قیمت فی پیس (₹)'],['Bikri save karo','Save sale','बिक्री सेव करें','فروخت محفوظ کریں'],
+['Aaj abhi tak koi bikri nahi.','No sales yet today.','आज अभी तक कोई बिक्री नहीं।','آج ابھی تک کوئی فروخت نہیں۔'],
+['Bikri likhne se pehle Saman tab mein kuch jodo.','Add items in the Items tab before recording sales.','बिक्री लिखने से पहले सामान टैब में कुछ जोड़ें।','فروخت لکھنے سے پہلے سامان ٹیب میں کچھ شامل کریں۔'],
+['Aaj','Today','आज','آج'],['Is mahine','This month','इस महीने','اس مہینے'],['Sab','All','सब','سب'],['Munafa','Profit','मुनाफ़ा','منافع'],['Maal ki laagat','Cost of goods','माल की लागत','مال کی لاگت'],['Kharcha','Expenses','ख़र्चा','خرچہ'],['Bikri ki entries','Sales entries','बिक्री की एंट्री','فروخت کی اندراجات'],
+['Kharcha likho','Record an expense','ख़र्चा लिखें','خرچہ لکھیں'],['Kis cheez ka (kiraya, bijli, salary...)','For what (rent, electricity, salary...)','किस चीज़ का (किराया, बिजली, सैलरी...)','کس چیز کا (کرایہ، بجلی، تنخواہ...)'],['Kitna (₹)','Amount (₹)','कितना (₹)','کتنا (₹)'],['Kharcha save karo','Save expense','ख़र्चा सेव करें','خرچہ محفوظ کریں'],['Khata','Ledger','खाता','کھاتہ'],
+['Is samay ki koi entry nahi.','No entries for this period.','इस समय की कोई एंट्री नहीं।','اس وقت کی کوئی اندراج نہیں۔'],
+['Bolkar entry likho','Enter by speaking','बोलकर एंट्री लिखें','بول کر اندراج کریں'],['Yahan likho ya mic dabao','Type here or tap the mic','यहाँ लिखें या माइक दबाएं','یہاں لکھیں یا مائک دبائیں'],['🎤 Bolo','🎤 Speak','🎤 बोलें','🎤 بولیں'],['Samjho','Understand','समझो','سمجھو'],['📷 Bill ya register ki photo','📷 Photo of bill or register','📷 बिल या रजिस्टर की फ़ोटो','📷 بل یا رجسٹر کی تصویر'],
+['Business salah','Business advice','व्यापार सलाह','کاروباری مشورہ'],['Apna sawal poochho, ya neeche se chuno.','Ask your question, or choose below.','अपना सवाल पूछें, या नीचे से चुनें।','اپنا سوال پوچھیں، یا نیچے سے چنیں۔'],['Kya mangwau?','What to reorder?','क्या मंगवाऊं?','کیا منگواؤں؟'],['Munafa badhao','Increase profit','मुनाफ़ा बढ़ाओ','منافع بڑھاؤ'],['Apna sawal likho','Type your question','अपना सवाल लिखें','اپنا سوال لکھیں'],
+['📷 Camera','📷 Camera','📷 कैमरा','📷 کیمرہ'],['📎 Photo ya file','📎 Photo or file','📎 फ़ोटो या फ़ाइल','📎 تصویر یا فائل'],['🎤 Baatcheet shuru','🎤 Start voice chat','🎤 बातचीत शुरू','🎤 بات چیت شروع'],['⏹ Baatcheet band','⏹ Stop voice chat','⏹ बातचीत बंद','⏹ بات چیت بند'],['Poochho','Ask','पूछें','پوچھیں'],['Jawab awaaz mein sunao','Read the answer aloud','जवाब आवाज़ में सुनाएं','جواب آواز میں سنائیں'],['Yeh save karun?','Save this?','यह सेव करूं?','یہ محفوظ کروں؟'],['Haan, save karo','Yes, save','हाँ, सेव करें','ہاں، محفوظ کریں'],['Cancel','Cancel','रद्द करें','منسوخ کریں'],['Soch raha hoon...','Thinking...','सोच रहा हूँ...','سوچ رہا ہوں...'],
+['+ Naya grahak jodo','+ Add customer','+ नया ग्राहक जोड़ें','+ نیا گاہک شامل کریں'],['Abhi koi grahak nahi hai. Upar wala button dabao.','No customers yet. Tap the button above.','अभी कोई ग्राहक नहीं है। ऊपर का बटन दबाएं।','ابھی کوئی گاہک نہیں ہے۔ اوپر والا بٹن دبائیں۔'],['Naya grahak','New customer','नया ग्राहक','نیا گاہک'],['Grahak ki jaankari','Customer details','ग्राहक की जानकारी','گاہک کی معلومات'],['Mobile number','Mobile number','मोबाइल नंबर','موبائل نمبر'],['Pata (address)','Address','पता','پتہ'],['Note','Note','नोट','نوٹ'],['Kul kharid','Total purchases','कुल ख़रीद','کل خرید'],['Kharid ka itihaas','Purchase history','ख़रीद का इतिहास','خرید کی تاریخ'],['Grahak (optional)','Customer (optional)','ग्राहक (वैकल्पिक)','گاہک (اختیاری)'],['Walk-in grahak','Walk-in customer','सामान्य ग्राहक','عام گاہک'],
+['Naam likho','Enter a name','नाम लिखें','نام لکھیں'],['Mobile number sahi likho','Enter a valid mobile number','मोबाइल नंबर सही लिखें','موبائل نمبر صحیح لکھیں'],['Yeh hata dein?','Delete this?','यह हटा दें?','کیا یہ ہٹا دیں؟'],['Quantity sahi likho','Enter a valid quantity','मात्रा सही लिखें','مقدار صحیح لکھیں'],['Naam aur amount likho','Enter name and amount','नाम और राशि लिखें','نام اور رقم لکھیں']
+].map(r=>[r[0],r.slice(1)]));
+function tr(s){const l=S.lang||'hl',e=D[String(s).trim()];return l==='hl'||!e?s:e[LI[l]]}
+function setL(v){S.lang=v;save();R()}
+const _al=window.alert.bind(window),_cf=window.confirm.bind(window);window.alert=m=>_al(tr(m));window.confirm=m=>_cf(tr(m));
+function TL(){
+ const l=S.lang||'hl';
+ document.documentElement.lang=l==='hl'?'hi':l;document.documentElement.dir=l==='ur'?'rtl':'ltr';$('#lg').value=l;
+ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),L=[];let n;while(n=w.nextNode())L.push(n);
+ L.forEach(n=>{if(n.parentNode.closest('script,#ttl,#lg'))return;
+  if(n._o===undefined)n._o=n.nodeValue;const s=n._o.trim(),e=D[s];
+  n.nodeValue=(l!=='hl'&&e)?n._o.replace(s,e[LI[l]]):n._o});
+ document.querySelectorAll('[placeholder]').forEach(e=>{if(e._p===undefined)e._p=e.placeholder;e.placeholder=tr(e._p)})}
+Object.assign(D,Object.fromEntries([
+['Settings','Settings','सेटिंग्स','سیٹنگز'],['Dukaan ka naam aur logo','Shop name and logo','दुकान का नाम और लोगो','دکان کا نام اور لوگو'],['Logo chuno','Choose logo','लोगो चुनें','لوگو چنیں'],['Logo hatao','Remove logo','लोगो हटाएं','لوگو ہٹائیں'],['Rang aur theme','Colours and theme','रंग और थीम','رنگ اور تھیم'],['Mukhya rang','Main colour','मुख्य रंग','مرکزی رنگ'],['Header ka rang','Header colour','हेडर का रंग','ہیڈر کا رنگ'],['Auto','Auto','ऑटो','آٹو'],['Light','Light','लाइट','لائٹ'],['Dark','Dark','डार्क','ڈارک'],['Features dikhao ya chhupao','Show or hide features','फ़ीचर दिखाएं या छुपाएं','فیچرز دکھائیں یا چھپائیں'],['Home aur Settings hamesha dikhte hain. Chhupane se data nahi hatta.','Home and Settings are always shown. Hiding does not delete data.','होम और सेटिंग्स हमेशा दिखते हैं। छुपाने से डेटा नहीं हटता।','ہوم اور سیٹنگز ہمیشہ نظر آتے ہیں۔ چھپانے سے ڈیٹا نہیں ہٹتا۔'],['Customisation reset karo','Reset customisation','कस्टमाइज़ेशन रीसेट करें','کسٹمائزیشن ری سیٹ کریں']
+].map(r=>[r[0],r.slice(1)])));
+const THEMES=[['Royal Purple','#7047EB','#171923'],['Emerald','#0F9D74','#10231C'],['Ocean','#1F6FEB','#0F1E3D'],['Saffron','#E8710A','#2B1A0B'],['Rose','#D6336C','#2A1220']],FT=[['prod','Saman'],['sale','Bikri'],['his','Hisaab'],['ai','AI'],['cust','Grahak']];
+const hx=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16)),mixc=(a,b,t)=>'#'+hx(a).map((v,i)=>Math.round(v*(1-t)+hx(b)[i]*t).toString(16).padStart(2,'0')).join(''),lum=h=>{const[r,g,b]=hx(h);return(.299*r+.587*g+.114*b)/255};
+function CF(){
+ const c=S.cfg,r=document.documentElement,m=c.mode||'auto',p=c.color||'#7047EB',h=c.hd||'#171923';
+ if(m==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',m);
+ const dk=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme:dark)').matches),sp=(k,v)=>r.style.setProperty(k,v);
+ sp('--ink',p);sp('--inkt',lum(p)>.62?'#171923':'#FFFFFF');sp('--sec',dk?mixc(p,'#12141c',.75):mixc(p,'#ffffff',.88));sp('--sect',dk?mixc(p,'#ffffff',.6):p);
+ sp('--hd',h);sp('--hdt',lum(h)>.62?'#171923':'#FFFFFF');
+ const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=h;
+ const lg=$('#logo');if(c.logo){lg.src=c.logo;lg.style.display='block'}else lg.style.display='none';
+ document.querySelectorAll('#nav button').forEach(b=>{b.style.display=c.tabs[b.dataset.t]===false?'none':''});
+ $('#gear').style.color='var(--hdt)'}
+function setV(){const c=S.cfg,m=c.mode||'auto',p=c.color||'#7047EB',h=c.hd||'#171923';
+ return `<h2>Settings</h2><div class="c"><h3 style="margin-top:0">Dukaan ka naam aur logo</h3><label>Dukaan ka naam</label><input id="sn2" value="${esc(S.shop)}"><button class="b" onclick="S.shop=$('#sn2').value.trim();save();R()">Save karo</button>
+<div style="display:flex;gap:10px;align-items:center;margin-top:12px">${c.logo?`<img src="${c.logo}" alt="" width="48" height="48" style="border-radius:10px;object-fit:cover">`:''}<button class="b s" style="margin:0" onclick="$('#lf').click()">Logo chuno</button>${c.logo?`<button class="b d" style="margin:0" onclick="S.cfg.logo='';save();R()">Logo hatao</button>`:''}</div><input id="lf" type="file" accept="image/*" hidden onchange="setLogo(this)"></div>
+<div class="c"><h3 style="margin-top:0">Rang aur theme</h3><div class="seg" style="flex-wrap:wrap">${THEMES.map((t,i)=>`<button style="flex:1 1 40%;border-left:12px solid ${t[1]}" class="${p===t[1]&&h===t[2]?'on':''}" onclick="th(${i})">${t[0]}</button>`).join('')}</div>
+<label>Mukhya rang</label><input id="c1" type="color" value="${p}" onchange="cc()" style="height:44px;padding:4px"><label>Header ka rang</label><input id="c2" type="color" value="${h}" onchange="cc()" style="height:44px;padding:4px">
+<div class="seg">${['auto','light','dark'].map(x=>`<button class="${m===x?'on':''}" onclick="S.cfg.mode='${x}';save();R()">${x[0].toUpperCase()+x.slice(1)}</button>`).join('')}</div></div>
+<div class="c"><h3 style="margin-top:0">Features dikhao ya chhupao</h3>${FT.map(([k,l])=>`<label style="display:flex;gap:10px;align-items:center;color:var(--tx);font-size:16px"><input type="checkbox" style="width:auto" ${c.tabs[k]===false?'':'checked'} onchange="S.cfg.tabs['${k}']=this.checked;save();R()"> ${l}</label>`).join('')}<p class="m">Home aur Settings hamesha dikhte hain. Chhupane se data nahi hatta.</p></div>
+<button class="b s" onclick="if(confirm('Customisation reset karo?')){S.cfg={tabs:{}};save();R()}">Customisation reset karo</button>`}
+function th(i){S.cfg.color=THEMES[i][1];S.cfg.hd=THEMES[i][2];save();R()}
+function cc(){S.cfg.color=$('#c1').value;S.cfg.hd=$('#c2').value;save();R()}
+function setLogo(el){const f=el.files[0];el.value='';if(!f)return;const im=new Image(),u=URL.createObjectURL(f);
+ im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=96;const s=Math.min(im.width,im.height);cv.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,96,96);S.cfg.logo=cv.toDataURL('image/jpeg',.85);URL.revokeObjectURL(u);save();R()};
+ im.onerror=()=>alert('Photo nahi khuli');im.src=u}
+{const _R=R;R=function(){_R();CF();TL()}}
+
+async function enableStockNotifications(){if(!('Notification'in window)){alert('Is browser mein notifications supported nahi hain.');return}const p=await Notification.requestPermission();if(p==='granted'){alert('Stock alerts enabled. App kholne par low-stock notification dikhega.');stockAlerts()}else alert('Notification permission allow nahi hui.')}
+function stockAlerts(){if(!track())return;const low=S.p.filter(p=>p.q<=p.m);if(!low.length)return;const msg=low.map(p=>p.n+': '+p.q+' left').join('\n');if('Notification'in window&&Notification.permission==='granted'){new Notification('Business Buddy · Stock alert',{body:msg})}else if(low.length)console.info('Stock alert:',msg)}
+if('Notification'in window&&Notification.permission==='default'){/* User can enable alerts from browser site settings. */}
+R();stockAlerts();
+</script>
+</body>
+</html>
